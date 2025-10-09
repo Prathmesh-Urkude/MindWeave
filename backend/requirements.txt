@@ -1,0 +1,28 @@
+# FastAPI core
+fastapi==0.115.0
+uvicorn==0.30.6
+
+# For CORS and HTTP requests
+requests==2.32.3
+python-dotenv==1.0.1
+
+# For data models (Pydantic)
+pydantic==2.9.2
+pydantic-settings==2.4.0
+email-validator==2.2.0
+
+# For MongoDB
+pymongo==4.9.2
+motor==3.6.0
+
+# For async tasks or background jobs
+celery==5.4.0
+redis==5.1.0
+
+# Developer tools
+black==24.8.0
+isort==5.13.2
+
+python-jose[cryptography]==3.3.0
+bcrypt==4.0.1
+passlib[bcrypt]==1.7.4
