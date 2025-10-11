@@ -2,27 +2,46 @@
 fastapi==0.115.0
 uvicorn==0.30.6
 
-# For CORS and HTTP requests
+# HTTP requests & environment
 requests==2.32.3
 python-dotenv==1.0.1
 
-# For data models (Pydantic)
+# Data models
 pydantic==2.9.2
 pydantic-settings==2.4.0
 email-validator==2.2.0
 
-# For MongoDB
+# MongoDB
 pymongo==4.9.2
 motor==3.6.0
 
-# For async tasks or background jobs
+# Async tasks / background jobs
 celery==5.4.0
 redis==5.1.0
+
+# Security & password hashing
+python-jose[cryptography]==3.3.0
+bcrypt==4.0.1
+passlib[bcrypt]==1.7.4
+
+# AI & Embeddings
+google-genai==1.2.0
+pinecone==7.0.0
+
+# Document processing
+pypdf==5.0.0
+python-docx==1.1.2
+google-generativeai
 
 # Developer tools
 black==24.8.0
 isort==5.13.2
+pyreadline3==3.5.4
 
-python-jose[cryptography]==3.3.0
-bcrypt==4.0.1
-passlib[bcrypt]==1.7.4
+# Progress bar
+tqdm==4.66.5
+
+werkzeug==2.3.0
+
+# Form handling for FastAPI
+python-multipart==0.0.7
