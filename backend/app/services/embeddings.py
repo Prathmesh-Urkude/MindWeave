@@ -25,7 +25,7 @@ def embed_texts(texts, task_type="retrieval_document"):
     return embeddings
 
 
-def answer_with_context(prompt, context, temperature=0.2, model="gemini-1.5-flash"):
+def answer_with_context(prompt, context, temperature=0.2, model="models/gemini-2.5-flash"):
     """
     Ask Gemini a question with retrieved context.
     """

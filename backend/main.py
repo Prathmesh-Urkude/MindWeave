@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.routes.auth_routes import auth_router
 from app.routes.upload_routes import router as upload_router
+from app.routes.ask_routes import router as ask_router
 
 app = FastAPI(title="MindWeave API", version="2.0")
 
@@ -16,6 +17,7 @@ app.add_middleware(
 
 app.include_router(auth_router)
 app.include_router(upload_router)
+app.include_router(ask_router)
 
 @app.get("/health")
 async def health_check():
