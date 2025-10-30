@@ -6,7 +6,6 @@ import AskSection from "../components/AskSection";
 import SummarizeSection from "../components/SummarizeSection";
 import FlashcardsSection from "../components/FlashcardsSection";
 import Header from "../components/Header";
-import Footer from "../components/Footer";
 
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -115,10 +114,10 @@ export default function Dashboard() {
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
           >
-            <h1 className="text-3xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+            {/* <h1 className="text-3xl font-bold text-gray-800 mb-6 flex items-center gap-2">
               <MessageCircle size={24} className="text-indigo-600" />
               Ask Questions
-            </h1>
+            </h1> */}
             <AskSection />
           </motion.section>
 
@@ -129,10 +128,10 @@ export default function Dashboard() {
             transition={{ duration: 0.6, delay: 0.15 }}
             viewport={{ once: true }}
           >
-            <h1 className="text-3xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+            {/* <h1 className="text-3xl font-bold text-gray-800 mb-6 flex items-center gap-2">
               <Brain size={24} className="text-indigo-600" />
               Summarize Notes
-            </h1>
+            </h1> */}
             <SummarizeSection />
           </motion.section>
 
@@ -143,10 +142,10 @@ export default function Dashboard() {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <h1 className="text-3xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+            {/* <h1 className="text-3xl font-bold text-gray-800 mb-6 flex items-center gap-2">
               <Layers size={24} className="text-indigo-600" />
               Generate Flashcards
-            </h1>
+            </h1> */}
             <FlashcardsSection />
           </motion.section>
         </div>
