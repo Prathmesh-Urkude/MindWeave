@@ -1,29 +1,28 @@
 import os
+from sentence_transformers import SentenceTransformer
 import google.generativeai as genai
 
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-EMBED_MODEL = os.getenv("EMBED_MODEL", "models/embedding-001")
-EMBED_DIM = int(os.getenv("EMBED_DIM", "768"))
+LOCAL_MODEL_PATH = os.getenv("LOCAL_EMBED_MODEL", "sentence-transformers/all-mpnet-base-v2")
+embedder = SentenceTransformer(LOCAL_MODEL_PATH)
 
-# Configure Gemini
-genai.configure(api_key=GEMINI_API_KEY)
+EMBED_DIM = embedder.get_sentence_embedding_dimension()
+print(f"Using local embedding model: {LOCAL_MODEL_PATH} (dim={EMBED_DIM})")
 
 def embed_texts(texts, task_type="retrieval_document"):
     """
-    Embed a list of texts and return their vectors.
-    task_type: 'retrieval_document' for chunks, 'retrieval_query' for user queries.
+    Embed a list of texts using a local model and return their vectors.
+    Produces 768-dimensional embeddings.
     """
-    embeddings = []
-    for t in texts:
-        resp = genai.embed_content(
-            model=EMBED_MODEL,
-            content=t,
-            task_type=task_type,
-            output_dimensionality=EMBED_DIM,
-        )
-        embeddings.append(resp["embedding"])  # resp is a dict with "embedding" key
-    return embeddings
+    embeddings = embedder.encode(texts, convert_to_numpy=True)
+    return embeddings.tolist()
 
+
+# --- Gemini for text generation ---
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+if GEMINI_API_KEY:
+    genai.configure(api_key=GEMINI_API_KEY)
+else:
+    print("Warning: GEMINI_API_KEY not found — generation will not work.")
 
 def answer_with_context(prompt, context, temperature=0.2, model="models/gemini-2.5-flash"):
     """
