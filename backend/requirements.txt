@@ -45,3 +45,10 @@ werkzeug==2.3.0
 
 # Form handling for FastAPI
 python-multipart==0.0.7
+
+# Core dependencies
+sentence-transformers==3.2.1
+transformers>=4.44.0
+torch>=2.2.0
+scikit-learn>=1.3.0
+
