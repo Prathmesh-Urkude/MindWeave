@@ -11,6 +11,7 @@ export default function AskSection() {
   const handleAsk = async () => {
     if (!question.trim()) return alert("Please enter a question");
     setLoading(true);
+    setAnswer(""); // Clear previous answer
     try {
       const res = await askQuestion(question);
       setAnswer(res.data.answer);
@@ -23,37 +24,47 @@ export default function AskSection() {
 
   return (
     <motion.div
-      whileHover={{ scale: 1.02 }}
-      className="p-6 bg-white/60 backdrop-blur-lg rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl transition-all"
+      // Replaced glassmorphism with the main theme's background
+      className="p-8 rounded-3xl border shadow-2xl transition-all
+        bg-gradient-to-tr from-white/70 via-blue-50 to-violet-50 text-gray-900"
     >
-      <h2 className="text-xl font-semibold mb-4 text-gray-900 flex items-center gap-2">
-        <MessageCircle className="text-indigo-600" /> Ask a Question
+      <h2 className="text-2xl font-bold mb-5 text-gray-900 flex items-center gap-3">
+        <MessageCircle className="text-indigo-600" size={28} /> Ask a Question
       </h2>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-4">
         <input
           type="text"
           placeholder="Type your question..."
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
-          className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+          // Styled to match FlashcardsSection input
+          className="w-full px-5 py-3 rounded-xl shadow-md border-2 border-indigo-200/50 focus:border-indigo-400 focus:ring-4 focus:ring-indigo-400/30 outline-none text-lg bg-white/80 placeholder:text-indigo-400"
         />
-        <button
+        <motion.button
           onClick={handleAsk}
-          disabled={loading}
-          className="py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition duration-200 flex justify-center items-center gap-2"
+          disabled={loading || !question.trim()}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          // Styled to match FlashcardsSection button
+          className="px-8 py-3 rounded-xl text-lg font-semibold bg-gradient-to-tr from-indigo-600 to-fuchsia-600 text-white drop-shadow-lg hover:from-fuchsia-600 hover:to-indigo-600 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {loading ? <Loader2 className="animate-spin w-4 h-4" /> : "Ask"}
-        </button>
+          {loading ? (
+            <Loader2 className="animate-spin w-5 h-5" />
+          ) : (
+            "✨ Ask"
+          )}
+        </motion.button>
       </div>
 
       {answer && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-4 p-4 bg-indigo-50 border border-indigo-100 rounded-lg"
+          // Themed answer box
+          className="mt-6 p-6 bg-white/80 border-2 border-indigo-200/30 rounded-2xl shadow-inner"
         >
-          <p className="text-gray-800">
-            <strong>Answer:</strong> {answer}
+          <p className="text-gray-800 text-lg">
+            <strong className="font-bold text-gray-900">Answer:</strong> {answer}
           </p>
         </motion.div>
       )}
