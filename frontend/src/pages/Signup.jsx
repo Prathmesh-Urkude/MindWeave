@@ -16,7 +16,7 @@ export default function Signup() {
     e.preventDefault();
     try {
       await signupUser(form);
-      alert("Account created successfully!");
+      alert("Account created successfully! 🎉");
       navigate("/login");
     } catch (err) {
       setError(err.response?.data?.detail || "Signup failed");
@@ -24,77 +24,91 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-indigo-50 via-white to-blue-100">
-      {/* Header */}
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-indigo-100 via-white to-purple-100 text-gray-800">
       <Header />
 
-      {/* Main Content */}
-      <main className="flex-grow flex items-center justify-center px-4">
-        <div className="w-full max-w-md p-8 rounded-3xl shadow-2xl bg-white/70 backdrop-blur-lg transition-all duration-300 hover:shadow-blue-200">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
-            Create Account 🚀
+      {/* Main Auth Card */}
+      <main className="flex-grow flex items-center justify-center px-4 py-10">
+        <div className="w-full max-w-md bg-white/70 backdrop-blur-xl rounded-3xl p-10 shadow-2xl border border-white/60 
+        hover:shadow-purple-200 transition-all duration-300">
+
+          {/* Heading */}
+          <h2 className="text-4xl font-extrabold text-center tracking-tight 
+            bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 
+            text-transparent bg-clip-text mb-3">
+            Let’s Get Started 🚀
           </h2>
-          <p className="text-center text-gray-500 text-sm mb-8">
-            Join the{" "}
-            <span className="text-indigo-600 font-semibold">MindWeave</span>{" "}
-            community today
+
+          <p className="text-center text-gray-600 mb-8">
+            Join the <span className="font-semibold text-indigo-600">MindWeave</span> community
           </p>
 
           {error && (
-            <p className="text-red-500 text-sm text-center mb-4">{error}</p>
+            <div className="bg-red-50 border border-red-400 text-red-600 text-sm py-2 px-3 rounded-lg mb-4 text-center shadow-sm">
+              {error}
+            </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Signup Form */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+
+            {/* Full Name */}
             <div className="relative">
-              <User className="absolute left-3 top-3 text-gray-400 w-5 h-5" />
+              <User className="absolute left-3 top-3 text-indigo-500 w-5 h-5" />
               <input
-                id="name"
-                name="name"
                 type="text"
-                placeholder="Full name"
+                name="name"
+                placeholder="Full Name"
+                required
                 value={form.name}
                 onChange={handleChange}
-                required
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-200"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border bg-white/60 border-gray-300 
+                focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition-all"
               />
             </div>
 
+            {/* Email */}
             <div className="relative">
-              <Mail className="absolute left-3 top-3 text-gray-400 w-5 h-5" />
+              <Mail className="absolute left-3 top-3 text-indigo-500 w-5 h-5" />
               <input
-                id="email"
-                name="email"
                 type="email"
-                placeholder="Email address"
+                name="email"
+                placeholder="Email Address"
+                required
                 value={form.email}
                 onChange={handleChange}
-                required
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-200"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border bg-white/60 border-gray-300 
+                focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition-all"
               />
             </div>
 
+            {/* Password */}
             <div className="relative">
-              <Lock className="absolute left-3 top-3 text-gray-400 w-5 h-5" />
+              <Lock className="absolute left-3 top-3 text-indigo-500 w-5 h-5" />
               <input
-                id="password"
-                name="password"
                 type="password"
+                name="password"
                 placeholder="Password"
+                required
                 value={form.password}
                 onChange={handleChange}
-                required
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-200"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border bg-white/60 border-gray-300 
+                focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition-all"
               />
             </div>
 
+            {/* Signup Button */}
             <button
               type="submit"
-              className="w-full py-3 flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-semibold shadow-md hover:shadow-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-300"
+              className="w-full py-3 rounded-xl font-semibold flex justify-center items-center gap-2 
+              text-white shadow-lg bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600
+              hover:shadow-purple-300 hover:from-indigo-700 hover:to-blue-700 active:scale-95 transition-all"
             >
-              <UserPlus className="w-5 h-5" /> Sign Up
+              <UserPlus className="w-5 h-5" /> Create Account
             </button>
           </form>
 
+          {/* Login Redirect */}
           <p className="text-sm text-center text-gray-600 mt-6">
             Already have an account?{" "}
             <button
@@ -102,7 +116,7 @@ export default function Signup() {
               onClick={() => navigate("/login")}
               className="text-indigo-600 hover:underline font-medium"
             >
-              Login
+              Log in
             </button>
           </p>
         </div>

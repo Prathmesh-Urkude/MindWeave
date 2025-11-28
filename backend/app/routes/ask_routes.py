@@ -9,7 +9,6 @@ from app.services.embeddings import answer_with_context
 router = APIRouter(prefix="/ask", tags=["Ask"])
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
-
 @router.post("/")
 async def ask_question(body: dict, token: str = Depends(oauth2_scheme)):
     user_data = verify_token(token)

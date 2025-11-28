@@ -1,88 +1,115 @@
-import { Home, Upload, MessageCircle, Brain, Layers, LogOut, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  Menu,
+  X,
+  Home,
+  Upload,
+  MessageCircle,
+  Brain,
+  Layers,
+  LogOut,
+} from "lucide-react";
+import { NavLink, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useState } from "react";
 
-export default function Sidebar({ onSelect }) {
-  const [open, setOpen] = useState(true);
-  const [active, setActive] = useState("Dashboard");
+export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
+  const navigate = useNavigate();
 
   const menuItems = [
-    { name: "Dashboard", icon: <Home size={20} /> },
-    { name: "Upload", icon: <Upload size={20} /> },
-    { name: "Ask", icon: <MessageCircle size={20} /> },
-    { name: "Summarize", icon: <Brain size={20} /> },
-    { name: "Flashcards", icon: <Layers size={20} /> },
+    { label: "Overview", icon: <Home size={22} />, path: "/dashboard" },
+    { label: "Upload", icon: <Upload size={22} />, path: "/dashboard/upload" },
+    { label: "Ask", icon: <MessageCircle size={22} />, path: "/dashboard/ask" },
+    { label: "Summarize", icon: <Brain size={22} />, path: "/dashboard/summarize" },
+    { label: "Flashcards", icon: <Layers size={22} />, path: "/dashboard/flashcards" },
   ];
 
-  const handleSelect = (name) => {
-    setActive(name);
-    if (onSelect) onSelect(name); // optional callback to update content
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
   };
 
   return (
     <motion.aside
-      animate={{ width: open ? 240 : 80 }}
-      className="bg-gradient-to-b from-indigo-700 via-indigo-800 to-indigo-900 text-white flex flex-col h-[calc(100vh-64px)] shadow-xl transition-all duration-300 rounded-r-2xl sticky top-[64px] select-none"
+      animate={{ width: sidebarOpen ? 250 : 80 }}
+      className="fixed top-[5rem] left-0 h-[calc(100vh-5rem)]
+      bg-white/60 backdrop-blur-2xl shadow-xl border-r border-white/40
+      transition-all duration-300 z-50 flex flex-col"
     >
-      {/* Header */}
-      <div className="flex items-center justify-between px-4 py-5 border-b border-indigo-600">
-        {open && (
-          <motion.h1
+      {/* Sidebar Header */}
+      <div className="flex items-center justify-between px-4 py-4 border-b border-white/40">
+        {sidebarOpen && (
+          <motion.h2
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-2xl font-bold tracking-wide whitespace-nowrap"
+            className="font-extrabold text-lg tracking-wide
+            bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text"
           >
-            MindWeave
-          </motion.h1>
+            📚 MindWeave
+          </motion.h2>
         )}
         <button
-          onClick={(e) => {
-            e.preventDefault();
-            setOpen(!open);
-          }}
-          className="p-1 rounded-md bg-indigo-600 hover:bg-indigo-500 transition"
+          onClick={() => setSidebarOpen((prev) => !prev)}
+          className="text-indigo-600 hover:text-indigo-800 transition md:hidden"
         >
-          {open ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
+          {sidebarOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
-      {/* Navigation */}
-      <nav className="flex-1 flex flex-col gap-2 mt-6 px-3 overflow-y-auto">
-        {menuItems.map((item, idx) => (
-          <motion.button
-            key={idx}
-            whileHover={{ scale: 1.03 }}
-            onClick={(e) => {
-              e.preventDefault(); // prevent unwanted scroll reset
-              handleSelect(item.name);
-            }}
-            className={`flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-200 w-full text-left
+      {/* Menu Items */}
+      <nav className="flex-1 flex flex-col mt-6 space-y-1 overflow-y-auto px-2">
+        {menuItems.map((item, i) => (
+          <NavLink
+            key={i}
+            to={item.path}
+            className={({ isActive }) =>
+              `group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 relative
               ${
-                active === item.name
-                  ? "bg-indigo-600 shadow-lg shadow-indigo-500/30"
-                  : "hover:bg-indigo-700"
-              }`}
+                isActive
+                  ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-500"
+                  : "text-gray-700 hover:bg-indigo-100 hover:text-indigo-700"
+              }`
+            }
           >
-            <div className="text-indigo-200">{item.icon}</div>
-            {open && (
-              <span className="text-sm font-medium text-indigo-100">
-                {item.name}
+            <div
+              className={({ isActive }) =>
+                `transition-all duration-300 ${
+                  sidebarOpen ? "" : "mx-auto"
+                }`
+              }
+            >
+              {item.icon}
+            </div>
+
+            {/* Label - Only shown when expanded */}
+            {sidebarOpen && <span className="font-medium">{item.label}</span>}
+
+            {/* Tooltip when collapsed */}
+            {!sidebarOpen && (
+              <span className="absolute left-20 bg-indigo-600 text-white 
+              text-xs px-2 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-all shadow-md">
+                {item.label}
               </span>
             )}
-          </motion.button>
+          </NavLink>
         ))}
       </nav>
 
-      {/* Footer */}
-      <div className="mt-auto border-t border-indigo-600 p-4">
-        <motion.button
-          whileHover={{ scale: 1.03 }}
-          onClick={(e) => e.preventDefault()} // prevent scroll jump
-          className="flex items-center gap-3 px-3 py-2 w-full rounded-lg bg-indigo-700 hover:bg-indigo-600 transition-all"
+      {/* Logout */}
+      <div className="mt-auto border-t border-white/40 p-4">
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center gap-3 px-3 py-2 rounded-xl 
+          bg-gradient-to-r from-red-500 to-pink-500 text-white
+          hover:from-red-600 hover:to-pink-600 transition-all shadow-md font-medium justify-center"
         >
-          <LogOut size={18} className="text-indigo-200" />
-          {open && <span className="text-sm font-medium">Logout</span>}
-        </motion.button>
+          <LogOut size={20} />
+          {sidebarOpen && "Logout"}
+        </button>
+
+        {sidebarOpen && (
+          <p className="text-xs text-gray-500 text-center mt-3">
+            © {new Date().getFullYear()} MindWeave
+          </p>
+        )}
       </div>
     </motion.aside>
   );
