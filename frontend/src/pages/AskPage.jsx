@@ -62,7 +62,7 @@ export default function AskPage() {
         <div className="space-y-2">
           <h1 className="text-4xl font-extrabold text-gray-900 flex items-center gap-3 drop-shadow-sm">
             <MessageCircle className="text-indigo-600" size={42} />
-            Ask AI From Your Notes
+            Ask AI From Your Document
           </h1>
           <p className="text-gray-600 text-lg">
             AI reads your document context and answers from your own notes 📚✨

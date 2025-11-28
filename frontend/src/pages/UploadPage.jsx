@@ -67,7 +67,7 @@ export default function UploadPage() {
         <div>
           <h1 className="text-4xl font-extrabold text-gray-900 flex items-center gap-3">
             <Upload size={32} className="text-indigo-600" />
-            Upload Notes
+            Upload Document
           </h1>
           <p className="text-gray-600 mt-2">
             Upload study materials to convert them into smart searchable chunks.

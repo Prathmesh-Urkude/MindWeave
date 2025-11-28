@@ -41,7 +41,7 @@ export default function SummarizePage() {
         <div className="space-y-2">
           <h1 className="text-4xl font-extrabold text-gray-900 flex items-center gap-3 drop-shadow-sm">
             <Brain className="text-indigo-600" size={40} />
-            Smart Note Summarizer
+            Smart Summarizer
           </h1>
           <p className="text-gray-600 text-lg">
             Instantly create focused summaries powered by AI ✨
