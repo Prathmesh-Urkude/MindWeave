@@ -50,8 +50,9 @@ def answer_with_context(prompt, context, temperature=0.2, model="models/gemini-2
         "  - **Key Points / Features / Symptoms / Concepts**\n"
         "  - **Examples / Use Cases**\n"
         "  - **Conclusion**\n"
-        "• If context contains chunk references, cite using (Chunk X)."
+        "• If context contains chunk references remove"
     )
+    #If context contains chunk references, cite using (Chunk X).
 
     full_prompt = (
         f"{sys}\n\n"
